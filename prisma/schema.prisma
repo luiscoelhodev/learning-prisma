@@ -14,7 +14,7 @@ model User {
   id        String   @id @default(uuid())
   name      String   @map("full_name")
   cpf       String   @unique
-  birthdate DateTime
+  birthdate DateTime?
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
   Profile   Profile?
