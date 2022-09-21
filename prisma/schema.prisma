@@ -9,3 +9,52 @@ datasource db {
   provider = "mysql"
   url      = env("DATABASE_URL")
 }
+
+model User {
+  id        String   @id @default(uuid())
+  name      String   @map("full_name")
+  cpf       String   @unique
+  birthdate DateTime
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+  Profile   Profile?
+  Post      Post[]
+
+  @@map("users")
+}
+
+model Profile {
+  id        String   @id @default(uuid())
+  type      String   @default("Simple")
+  bio       String?
+  picture   String?
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId    String   @unique @map("user_id")
+
+  @@map("profiles")
+}
+
+model Post {
+  id        String   @id @default(uuid())
+  subject   String
+  text      String
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+  user      User?    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId    String   @map("user_id")
+  Category Category[]
+
+  @@map("posts")
+}
+
+model Category {
+  id        String   @id @default(uuid())
+  type      String
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+  Post Post[]
+
+  @@map("categories")
+}
