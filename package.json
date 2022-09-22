@@ -10,6 +10,7 @@
   "author": "Luis Coelho",
   "license": "ISC",
   "devDependencies": {
+    "@types/express": "^4.17.14",
     "@types/node": "^18.7.18",
     "prisma": "^4.3.1",
     "tsx": "^3.9.0",
